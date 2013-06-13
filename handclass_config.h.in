@@ -1,0 +1,7 @@
+#ifndef _CONFIG_H_
+#define _CONFIG_H_
+
+static const char *SCENEPATH="@SCENE_PATH@";
+#cmakedefine CAM_ACCESS
+
+#endif
