@@ -32,9 +32,9 @@ This file is part of the Hand project (https://github.com/libicocco/Hand).
 namespace po = boost::program_options;
 int main(int argc,char* argv[])
 {
-  std::string lDBPath,lFeatPath,lIndexPath,lTestFolder,lTestPattern,lMetricPath,lNNChoice;
+  std::string lDBPath, lFeatPath, lIndexPath, lMetricPath, lNNChoice, lVideo;
   unsigned lNNN,lDBsize,lFeatDim,lDimMetric;
-  bool lTemporalSmoothing,lGUI;
+  bool lTemporalSmoothing, lGUI, lOffline;
   // Declare the supported options.
 	std::cout << SCENEPATH << std::endl;
   po::options_description desc("Allowed options");
@@ -43,8 +43,6 @@ int main(int argc,char* argv[])
     ("dbpath,d", po::value<std::string>(&lDBPath)->default_value((std::string)SCENEPATH + (std::string)"/hands.db"),"Path to db file")
     ("nnalg,a", po::value<std::string>(&lNNChoice)->default_value("lsh"), "What algorithm to use for nearest neighbors")
     ("featpath,f", po::value<std::string>(&lFeatPath)->default_value((std::string)SCENEPATH + (std::string)"/hog.bin"),"Path to feature binary file")
-    ("testfolder,t", po::value<std::string>(&lTestFolder)->default_value((std::string)SCENEPATH + (std::string)"/synthetic_test/test1/"),"Path to folder with test images")
-    ("testpattern,p", po::value<std::string>(&lTestPattern)->default_value(".*.png"),"Test files common pattern")
     ("nnn,n", po::value<unsigned>(&lNNN)->default_value(16), "Number of NN to show")
     ("dbn", po::value<unsigned>(&lDBsize)->default_value(106920), "Number of db elements")
     ("fn", po::value<unsigned>(&lFeatDim)->default_value(512), "Dimensionality of the features")
@@ -52,6 +50,8 @@ int main(int argc,char* argv[])
     ("dimMetric", po::value<unsigned>(&lDimMetric)->default_value(0), "Dimensionality of the joint metric used")
     ("metric", po::value<std::string>(&lMetricPath)->default_value(""), "Matrix with features for different joint configurations (nnn x dimMetric)")
     ("gui", po::value<bool>(&lGUI)->default_value(true), "Should the results be shown in a GUI?")
+    ("offline", po::value<bool>(&lOffline)->default_value(false), "Do the analysis on a video")
+    ("video", po::value<std::string>(&lVideo)->default_value((std::string)SCENEPATH + (std::string)"/video1"), "Path to video")
     ;
   
   po::variables_map vm;
@@ -78,7 +78,7 @@ int main(int argc,char* argv[])
   ProcessFeat<CPoselistMulti,float> lProcFeat(lNNptr,&lPList);
   Hog<float> lHog;
   Feature<float> *lFeat=&lHog;
-  
-  CPoseEstimator<CPoselistMulti,float> lTrackerHogExact(lFeat,&lProcFeat,lTestFolder,lTestPattern,lGUI);
+ 
+  CPoseEstimator<CPoselistMulti,float> lTrackerHogExact(lFeat,&lProcFeat,lOffline,lVideo, lGUI);
   lTrackerHogExact.Run();
 }
