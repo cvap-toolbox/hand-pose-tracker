@@ -27,11 +27,12 @@ This file is part of the Hand project (https://github.com/libicocco/Hand).
 #include "nn.h"
 #include "exactNN.h"
 #include "approxNNflann.h"
+#include "approxNNlshkit.h"
 
 namespace po = boost::program_options;
 int main(int argc,char* argv[])
 {
-  std::string lDBPath,lFeatPath,lTestFolder,lTestPattern,lMetricPath;
+  std::string lDBPath,lFeatPath,lIndexPath,lTestFolder,lTestPattern,lMetricPath,lNNChoice;
   unsigned lNNN,lDBsize,lFeatDim,lDimMetric;
   bool lTemporalSmoothing,lGUI;
   // Declare the supported options.
@@ -40,7 +41,8 @@ int main(int argc,char* argv[])
   desc.add_options()
     ("help,h", "produce help message")
     ("dbpath,d", po::value<std::string>(&lDBPath)->default_value((std::string)SCENEPATH + (std::string)"/hands.db"),"Path to db file")
-    ("featpath,f", po::value<std::string>(&lFeatPath)->default_value((std::string)SCENEPATH + (std::string)"/hog.txt"),"Path to feature binary file")
+    ("nnalg,a", po::value<std::string>(&lNNChoice)->default_value("lsh"), "What algorithm to use for nearest neighbors")
+    ("featpath,f", po::value<std::string>(&lFeatPath)->default_value((std::string)SCENEPATH + (std::string)"/hog.bin"),"Path to feature binary file")
     ("testfolder,t", po::value<std::string>(&lTestFolder)->default_value((std::string)SCENEPATH + (std::string)"/synthetic_test/test1/"),"Path to folder with test images")
     ("testpattern,p", po::value<std::string>(&lTestPattern)->default_value(".*.png"),"Test files common pattern")
     ("nnn,n", po::value<unsigned>(&lNNN)->default_value(16), "Number of NN to show")
@@ -61,11 +63,18 @@ int main(int argc,char* argv[])
     return 1;
   }
   CPoselistMulti lPList(lDBPath,lTemporalSmoothing,lDimMetric,lMetricPath);
-  exactNN<float> lNN(lNNN,lDBsize,lFeatDim,lFeatPath.c_str());
-  //exactNN<float> lNN(20,106920,512,"/home/javier/handDB_5stages/log_4_8_5stages.HOGnew.bin");
-  //approxNNflann<float> lNN(20,106920,512,"/home/javier/handDB_5stages/log_4_8_5stages.HOGnew.bin",
-  // 	"/home/javier/handDB_5stages/HOGnew_flann_9_1.index");
-  nn<float> *lNNptr=&lNN;
+  nn<float> *lNNptr;
+  if (lNNChoice == "lsh") {
+    lFeatPath = LSH_BIN_PATH;
+    lIndexPath = LSH_INDEX_PATH;
+    lNNptr = new approxNNlshkit<float>(lNNN,lDBsize,lFeatDim,lFeatPath.c_str(), lIndexPath.c_str());
+  } else if (lNNChoice == "flann"){
+    lFeatPath = FLANN_BIN_PATH;
+    lIndexPath = FLANN_INDEX_PATH;
+    lNNptr = new approxNNflann<float>(lNNN,lDBsize,lFeatDim,lFeatPath.c_str(), lIndexPath.c_str());
+  } else {
+    lNNptr = new exactNN<float>(lNNN,lDBsize,lFeatDim,lFeatPath.c_str());
+  }
   ProcessFeat<CPoselistMulti,float> lProcFeat(lNNptr,&lPList);
   Hog<float> lHog;
   Feature<float> *lFeat=&lHog;

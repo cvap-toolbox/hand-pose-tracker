@@ -12,13 +12,11 @@ set (SOURCES_DIR_ANN ${CMAKE_SOURCE_DIR}/3rdparty/ann_1.1.2)
 set (SOURCES_DIR_FIGTREE ${CMAKE_SOURCE_DIR}/3rdparty/figtree-0.9.3)
 set (SCENE_PATH ${CMAKE_SOURCE_DIR}/scene)
 
-set(DATA_BASEPATH ${CMAKE_SOURCE_DIR} CACHE STRING "")
-
-set(FLANN_BIN_PATH ${DATA_BASEPATH}/flann.bin CACHE FILEPATH "Write the path to the flann binary file" )
-set(FLANN_INDEX_PATH ${DATA_BASEPATH}/flann.idx CACHE FILEPATH "Write the path to the flann index file")
-set(LSH_BIN_PATH ${DATA_BASEPATH}/data.bin CACHE FILEPATH "Write the path to the lsh binary file" )
-set(LSH_INDEX_PATH ${DATA_BASEPATH}/data.idx CACHE FILEPATH "Write the path to the lsh index file")
-set(DB_PATH ${DATA_BASEPATH}/hands.db CACHE FILEPATH "Write the path to the SQL DB path")
+set(FLANN_BIN_PATH ${SCENE_PATH}/flann.bin CACHE FILEPATH "Write the path to the flann binary file" )
+set(FLANN_INDEX_PATH ${SCENE_PATH}/flann.idx CACHE FILEPATH "Write the path to the flann index file")
+set(LSH_BIN_PATH ${SCENE_PATH}/lsh.bin CACHE FILEPATH "Write the path to the lsh binary file" )
+set(LSH_INDEX_PATH ${SCENE_PATH}/lsh.idx CACHE FILEPATH "Write the path to the lsh index file")
+set(DB_PATH ${SCENE_PATH}/hands.db CACHE FILEPATH "Write the path to the SQL DB path")
 
 configure_file(${CMAKE_SOURCE_DIR}/handclass_config.h.in ${CMAKE_SOURCE_DIR}/include/handclass_config.h)
 
@@ -28,31 +26,32 @@ find_package(Boost COMPONENTS regex filesystem system)
 find_package(GSL REQUIRED)
 pkg_check_modules ( OPENCV REQUIRED opencv)
 
-if(WIN32)
-    set(CMAKE_MODULE_PATH "$ENV{OGRE_HOME}/CMake/;${CMAKE_MODULE_PATH}")
-    set(OGRE_SAMPLES_INCLUDEPATH
-            $ENV{OGRE_HOME}/Samples/include
-       )
-endif(WIN32)
+#This section below is for Ogre, since I took out the rendering code this is not needed yet.
+#if(WIN32)
+#    set(CMAKE_MODULE_PATH "$ENV{OGRE_HOME}/CMake/;${CMAKE_MODULE_PATH}")
+#    set(OGRE_SAMPLES_INCLUDEPATH
+#            $ENV{OGRE_HOME}/Samples/include
+#       )
+#endif(WIN32)
 
-if(UNIX)
-    if(EXISTS "/usr/local/lib/OGRE/cmake")
+#if(UNIX)
+#    if(EXISTS "/usr/local/lib/OGRE/cmake")
 
-    set(CMAKE_MODULE_PATH "/usr/local/lib/OGRE/cmake/;${CMAKE_MODULE_PATH}")
-    set(OGRE_SAMPLES_INCLUDEPATH "/usr/local/share/OGRE/samples/Common/include/") # We could just *assume* that developers uses this basepath : /usr/local
+#    set(CMAKE_MODULE_PATH "/usr/local/lib/OGRE/cmake/;${CMAKE_MODULE_PATH}")
+#    set(OGRE_SAMPLES_INCLUDEPATH "/usr/local/share/OGRE/samples/Common/include/") # We could just *assume* that developers uses this basepath : /usr/local
 
-    endif(EXISTS "/usr/local/lib/OGRE/cmake")
+ #   endif(EXISTS "/usr/local/lib/OGRE/cmake")
     
-    if(EXISTS "/usr/lib/OGRE/cmake")
+ #   if(EXISTS "/usr/lib/OGRE/cmake")
 
-    set(CMAKE_MODULE_PATH "/usr/lib/OGRE/cmake/;${CMAKE_MODULE_PATH}")
-    set(OGRE_SAMPLES_INCLUDEPATH "/usr/share/OGRE/samples/Common/include/") # Otherwise, this one
+ #   set(CMAKE_MODULE_PATH "/usr/lib/OGRE/cmake/;${CMAKE_MODULE_PATH}")
+ #   set(OGRE_SAMPLES_INCLUDEPATH "/usr/share/OGRE/samples/Common/include/") # Otherwise, this one
 
-    endif(EXISTS "usr/lib/OGRE/cmake")
+ #  endif(EXISTS "usr/lib/OGRE/cmake")
 
-else ()
-    message(SEND_ERROR "Failed to find module path.")
-endif(UNIX)
+#else ()
+ #   message(SEND_ERROR "Failed to find module path.")
+#endif(UNIX)
 
     if (CMAKE_BUILD_TYPE STREQUAL "")
 # CMake defaults to leaving CMAKE_BUILD_TYPE empty. This screws up
@@ -64,8 +63,7 @@ endif ()
 
     set(CMAKE_INSTALL_PREFIX "${CMAKE_CURRENT_BINARY_DIR}/dist")
 
-find_package(OGRE REQUIRED)
-
+#find_package(OGRE REQUIRED)
 
 include_directories (${CMAKE_SOURCE_DIR}/include
     /usr/include/eigen3

@@ -96,12 +96,13 @@ public:
         std::cout << "PROBLEMS OPENING DATA FILE " << mDataPath << " for aNN" << std::endl;
         return 0;
       }
+      /*
       for (int i = 0; i < this->nPoints * this->pointsDimension; ++i) {
         lS >> mData[i];
-      }
-      //lS.read((char*)mData,this->nPoints*this->pointsDimension*sizeof(tType));
+      }*/
+      lS.read((char*)mData,this->nPoints*this->pointsDimension*sizeof(tType));
       if (lS) {
-         //std::cout << "Everything read succesffully\n";
+         std::cout << "Everything read succesffully\n";
          /*for (int i = 0; i < 512; ++i) {
             printf("%.4f ", mData[i]);
          }*/

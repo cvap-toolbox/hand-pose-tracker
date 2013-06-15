@@ -138,7 +138,7 @@ public:
     /// Insert a new element, update the heap.
     Topk &operator << (Element t)
     {
-        if (!(t.dist < th)) return *this;
+        if (!(th > t.dist)) return *this;
         if (K == 0) { // R-NN
             this->push_back(t);
             return *this;
