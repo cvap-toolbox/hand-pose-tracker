@@ -5,6 +5,7 @@ ${Boost_SYSTEM_LIBRARY}
 ${Boost_REGEX_LIBRARY}
 ${SOURCES_DIR_FIGTREE}/lib/libfigtree.so
 ${OpenCV_LIBS}
+${OPENCV_LDFLAGS}
 opencv_imgproc
 #/usr/local/lib/libopencv_imgproc.so
 )

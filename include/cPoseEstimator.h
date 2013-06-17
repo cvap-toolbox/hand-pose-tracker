@@ -154,26 +154,33 @@ class CPoseEstimator
                 return false;
             } else {
                 std::pair<cv::Mat,cv::Mat> lImMaskCrop;
-                cv::Rect lResBox=mTracker.getHand(lIm,lImMaskCrop);
-                std::vector<tType> lVHog=mFeat->compute(lImMaskCrop,mWorsen);
-                cv::rectangle(lIm, lResBox.tl(), lResBox.br(), cv::Scalar(255, 255, 255)); 
-                mProcFeat->UpdatePoselist(lVHog,lExpectedPose);
-                //std::cout << "error so far: " << (mProcFeat->getMeanErrorV()).sum()/(NORI+NJOINTS) << std::endl;
-                tPoseV lWPose = mProcFeat->getPoselist()->getWPose();
+                try {
+                    cv::Rect lResBox=mTracker.getHand(lIm,lImMaskCrop);
+                    //lImMaskCrop.first = lIm;
+                    //cv::imshow("first", lImMaskCrop.first);
+                    //cv::imshow("second", lImMaskCrop.second);
+                    std::vector<tType> lVHog=mFeat->compute(lImMaskCrop,mWorsen);
+                    cv::rectangle(lIm, lResBox.tl(), lResBox.br(), cv::Scalar(0, 255, 255)); 
+                    mProcFeat->UpdatePoselist(lVHog,lExpectedPose);
+                    //std::cout << "error so far: " << (mProcFeat->getMeanErrorV()).sum()/(NORI+NJOINTS) << std::endl;
+                    tPoseV lWPose = mProcFeat->getPoselist()->getWPose();
 
-                std::ofstream outfile;
-                outfile.open("logWPose", std::ios::app);
-                outfile << lWPose << std::endl;
-                outfile.close();
+                    std::ofstream outfile;
+                    outfile.open("logWPose", std::ios::app);
+                    outfile << lWPose << std::endl;
+                    outfile.close();
 
-                if(mGUI)
-                {
-                    // construct mResult image
-                    buildResultIm(lIm,lImMaskCrop.first);
-                    // display it
-                    DoExpose();
+                    if(mGUI)
+                    {
+                        // construct mResult image
+                        buildResultIm(lIm,lImMaskCrop.first);
+                        // display it
+                        DoExpose();
+                    }
+                    return true;
+                } catch (EError e) {
+                    return true;
                 }
-                return true;
             }
         }
 
@@ -185,9 +192,12 @@ class CPoseEstimator
         {
             cv::imshow(mResultName,mResult);
             // Press Esc to close the program.
-            if(cv::waitKey(mDelay) == 27) {
+            int keyCode = cv::waitKey(mDelay);
+            if(keyCode == 27) {
                 exit(0);
-            };
+            } else if (keyCode == 32) {
+                cv::waitKey();
+            }
         }
 
         /** Run for non gui interfaces */
@@ -201,6 +211,19 @@ class CPoseEstimator
             // 		const boost::ptr_vector<CPose> lPoselist(mProcFeat->getPoselist().getPoselist());
             const CPoselistMulti *lPLM(mProcFeat->getPoselist());
             const boost::ptr_vector<CPose> lPoselist(lPLM->getPoselist());
+            
+            cv::Rect lImRect(cv::Point(0,0),cv::Size(320,240));
+            cv::Mat lResultIm=mResult(lImRect);
+            cv::resize(pIm,lResultIm,lImRect.size());
+            cv::Rect lImCropRect(cv::Point(320,0),cv::Size(320,240));
+
+            cv::Mat lResultImCrop=mResult(lImCropRect);
+            //cv::Mat lImCrop8UC3(pImCrop.size(),CV_8UC3);
+            //pImCrop.convertTo(lImCrop8UC3,CV_8UC3);
+            //cv::resize(lImCrop8UC3,lResultImCrop,lImCropRect.size()); // could need converting 32FC3 to 8UC3
+            lResultImCrop = cv::Scalar(255,255,255);
+            mFeat->draw(lResultImCrop);
+
             for(int i=0;i<lPosesPerColumn;++i)
             {
                 for(int j=0;j<lPosesPerRow;++j)
@@ -214,18 +237,6 @@ class CPoseEstimator
                     }
                 }
             }
-
-            cv::Rect lImRect(cv::Point(0,0),cv::Size(320,240));
-            cv::Mat lResultIm=mResult(lImRect);
-            cv::resize(pIm,lResultIm,lImRect.size());
-            cv::Rect lImCropRect(cv::Point(320,0),cv::Size(320,240));
-
-            cv::Mat lResultImCrop=mResult(lImCropRect);
-            //cv::Mat lImCrop8UC3(pImCrop.size(),CV_8UC3);
-            //pImCrop.convertTo(lImCrop8UC3,CV_8UC3);
-            //cv::resize(lImCrop8UC3,lResultImCrop,lImCropRect.size()); // could need converting 32FC3 to 8UC3
-            lResultImCrop = cv::Scalar(255,255,255);
-            mFeat->draw(lResultImCrop);
         }
 
 

@@ -19,6 +19,7 @@ This file is part of the Hand project (https://github.com/libicocco/Hand).
 
 **********************************************/
 #include <opencv2/imgproc/imgproc.hpp>
+#include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
 #include <algorithm>
 #include <iostream>
@@ -87,6 +88,7 @@ cv::Rect CHandTracker::getHand( const cv::Mat& pIm, tMatMat& pCropMask)
 	}
 	cv::Rect lHandBox = (mTrackedHand->second).getReal();
 	//pIm(lHandBox).copyTo(pCropMask.first);
+    //cv::imshow("pim", pIm);
 	pIm(lHandBox).convertTo(pCropMask.first,CV_32FC3); // we'll need a gray level 32F, so we better convert to 32F now
 	lMask(lHandBox).copyTo(pCropMask.second);
 	

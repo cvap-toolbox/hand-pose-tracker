@@ -13,8 +13,8 @@ target_link_libraries(handTracker boost_regex boost_filesystem boost_system boos
 add_executable(createFeatDB createFeatDB.cpp) 
 target_link_libraries(createFeatDB boost_system boost_filesystem boost_regex handclass sqlite3 ${GSL_LIBRARIES} lshkit ${OPENCV_LDFLAGS})
 
-add_executable(test_hog test_hog.cpp)
-target_link_libraries(test_hog boost_system boost_filesystem boost_regex handclass sqlite3 ${GSL_LIBRARIES} lshkit ${OPENCV_LDFLAGS})
+add_executable(recompute_hog recompute_hog.cpp)
+target_link_libraries(recompute_hog boost_system boost_filesystem boost_regex handclass sqlite3 ${GSL_LIBRARIES} lshkit ${OPENCV_LDFLAGS})
 
 add_executable(test_hog_db test_hog_db.cpp)
 target_link_libraries(test_hog_db boost_system boost_filesystem boost_regex handclass sqlite3 ${GSL_LIBRARIES} lshkit ${OPENCV_LDFLAGS})
