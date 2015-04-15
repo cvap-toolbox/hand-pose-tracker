@@ -74,7 +74,7 @@ private:
   std::ostream& printVector(std::ostream& pOutput) const
   {
     for(int i=0;i<mNHists*mNBins;++i)
-      pOutput << setiosflags(std::ios::fixed) << std::setw(3) << std::setprecision(3)<< this->mFeat[i] << " ";
+      pOutput << std::setiosflags(std::ios::fixed) << std::setw(3) << std::setprecision(3)<< this->mFeat[i] << " ";
     return pOutput;
   }
   /**

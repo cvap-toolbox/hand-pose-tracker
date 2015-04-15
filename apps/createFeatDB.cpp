@@ -50,7 +50,7 @@ int main(int argc,char *argv[])
     
     Hog<float> lHog;
     Feature<float> *lFeat = &lHog;
-    lFeat->compute(lImMask,999999999999);
+    lFeat->compute(lImMask,3567587327);
     std::vector<float> lFeatV = lFeat->getFeat();
     //std::copy(lFeatV.begin(),lFeatV.end(),std::ostream_iterator<float>(lStext," "));
     std::copy(lFeatV.begin(),lFeatV.end(),lFeatArray);

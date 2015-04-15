@@ -46,7 +46,7 @@ public:
 	CHandTracker(cv::Scalar_<int> pMeanColor=cv::Scalar_<int>(10,133,129),
 							 cv::Scalar_<int> pStdColor=cv::Scalar_<int>(10,123,127)):
 	mTracker(),mLeftBottomTag(0),mFrame(0),mTrackedSet(),
-	mTrackedHand(NULL),mMeanColor(pMeanColor),mStdColor(pStdColor){};
+	mTrackedHand(),mMeanColor(pMeanColor),mStdColor(pStdColor){};
 	
 	/**
 	 * @brief Track skin blobs and returns their masks and cropped image 

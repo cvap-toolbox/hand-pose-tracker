@@ -20,7 +20,8 @@ This file is part of the Hand project (https://github.com/libicocco/Hand).
 **********************************************/
 #include <vector>
 #include <queue>
-#include <Eigen/Dense>
+//#include <Eigen/Dense>
+#include <eigen3/Eigen/Dense>
 #include <boost/filesystem.hpp>
 
 #include <boost/accumulators/numeric/functional/vector.hpp>

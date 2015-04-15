@@ -25,6 +25,7 @@ This file is part of the Hand project (https://github.com/libicocco/Hand).
 //#include <unistd.h>
 #include <chrono>
 #include <opencv2/core/core.hpp>
+#include <opencv2/highgui/highgui.hpp>    
 #include <opencv2/flann/flann.hpp>
 #include <vector>
 #include <iostream>
@@ -49,7 +50,7 @@ private:
 	
 	cv::flann::Index *mIndex;
 public:
-  approxNNflann(const int pK,const int pNPoints,const int pDimPoints,const char *pDataPath,const char *pIndexPath,
+  	approxNNflann(const int pK,const int pNPoints,const int pDimPoints,const char *pDataPath,const char *pIndexPath,
                 const float pPrecision=0.9,const float pBuildWeight=0.1):
 								mK(pK),mInitialized(false),mDataPath(pDataPath),mIndexPath(pIndexPath),mPrecision(pPrecision),mBuildWeight(pBuildWeight)
 								{this->nn_set_values(pNPoints,pDimPoints,mDataPath);initialize();} /**< @todo data.bin and data.idx should be configured with cmake*/
