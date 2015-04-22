@@ -21,7 +21,7 @@
 #include "cDBelement.h"
 
 int main(int argc, char** argv) {
-	CDB db("/home/dama/thesis/code/Hand/handpose/scene/hands.db");
+	CDB db("/Users/martinhjelm/Dropbox/Code/TaskConstraints/hand-pose-tracker/scene/hands.db");
     CDBelement elem = db.query(1620);
     std::vector<float> v = elem.getFeature();
     for (int i = 0; i < v.size(); ++i) {

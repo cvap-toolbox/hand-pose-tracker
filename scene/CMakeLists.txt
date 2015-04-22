@@ -5,6 +5,7 @@
 #)
 
 add_executable(renderhand renderhand.cc)
+add_executable(convert convert.cpp)
 target_link_libraries(renderhand ${Boost_LIBRARIES} ${OpenCV_LIBS}
 #${OGRE_LIBRARIES}
 sqlite3 handclass

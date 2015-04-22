@@ -211,7 +211,7 @@ class CPoseEstimator
             // 		const boost::ptr_vector<CPose> lPoselist(mProcFeat->getPoselist().getPoselist());
             const CPoselistMulti *lPLM(mProcFeat->getPoselist());
             const boost::ptr_vector<CPose> lPoselist(lPLM->getPoselist());
-            
+
             cv::Rect lImRect(cv::Point(0,0),cv::Size(320,240));
             cv::Mat lResultIm=mResult(lImRect);
             cv::resize(pIm,lResultIm,lImRect.size());
@@ -232,7 +232,7 @@ class CPoseEstimator
                     {
                         cv::Rect lR(cv::Point(i*lPoseSz.width, 240 + j*lPoseSz.height),lPoseSz);
                         cv::Mat lPoseIm(cv::imread(SCENEPATH + lPoselist[i*lPosesPerRow+j].getImagePath().string()));
-                        cv::Mat lResultPose=mResult(lR);
+                        cv::Mat lResultPose=mResult(lR);                        
                         cv::resize(lPoseIm,lResultPose,lR.size());
                     }
                 }

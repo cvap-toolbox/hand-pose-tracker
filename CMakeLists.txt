@@ -8,20 +8,24 @@ set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")
 # set(CMAKE_CXX_FLAGS " -O0 -g -std=c++0x -msse -msse2 -msse3 -Wall -Wextra -Winit-self -Wpointer-arith -Wno-sign-compare -Wcast-qual -Wno-unused-parameter -Wno-uninitialized -Wno-missing-field-initializers -Wnon-virtual-dtor -Woverloaded-virtual -Wsign-promo ${CMAKE_CXX_FLAGS}")
 # set(CMAKE_CXX_FLAGS " -O3 -g -std=gnu++0x -msse -msse2 -msse3 -Wall -Wextra -Winit-self -Wpointer-arith -Wno-sign-compare -Wcast-qual -Wno-unused-parameter -Wno-uninitialized -Wno-missing-field-initializers -Wnon-virtual-dtor -Woverloaded-virtual -Wsign-promo ${CMAKE_CXX_FLAGS}")
 SET(CMAKE_CXX_FLAGS "-std=c++0x -O4 -stdlib=libc++ -Wno-unused-variable")
-set (SOURCES_DIR_LSHKIT ${CMAKE_SOURCE_DIR}/3rdparty/lshkit-0.2.1)
-set (SOURCES_DIR_ANN ${CMAKE_SOURCE_DIR}/3rdparty/ann_1.1.2)
-set (SOURCES_DIR_FIGTREE ${CMAKE_SOURCE_DIR}/3rdparty/figtree)
-set (SCENE_PATH ${CMAKE_SOURCE_DIR}/scene)
+SET (SOURCES_DIR_LSHKIT ${CMAKE_SOURCE_DIR}/3rdparty/lshkit-0.2.1)
+SET (SOURCES_DIR_ANN ${CMAKE_SOURCE_DIR}/3rdparty/ann_1.1.2)
+SET (SOURCES_DIR_FIGTREE ${CMAKE_SOURCE_DIR}/3rdparty/figtree)
+SET (SCENE_PATH ${CMAKE_SOURCE_DIR}/scene)
 
-set(FLANN_BIN_PATH ${SCENE_PATH}/flann.bin CACHE FILEPATH "Write the path to the flann binary file" )
-set(FLANN_INDEX_PATH ${SCENE_PATH}/flann.idx CACHE FILEPATH "Write the path to the flann index file")
-set(LSH_BIN_PATH ${SCENE_PATH}/lsh.bin CACHE FILEPATH "Write the path to the lsh binary file" )
-set(LSH_INDEX_PATH ${SCENE_PATH}/lsh.idx CACHE FILEPATH "Write the path to the lsh index file")
-set(DB_PATH ${SCENE_PATH}/hands.db CACHE FILEPATH "Write the path to the SQL DB path")
+message(STATUS "${CMAKE_SOURCE_DIR}")
+message(STATUS "${SOURCES_DIR_FIGTREE}")
+message(STATUS "${SCENE_PATH}")
+
+#SET(FLANN_BIN_PATH ${SCENE_PATH}/flann.bin CACHE FILEPATH "Write the path to the flann binary file" )
+#SET(FLANN_INDEX_PATH ${SCENE_PATH}/flann.idx CACHE FILEPATH "Write the path to the flann index file")
+#SET(LSH_BIN_PATH ${SCENE_PATH}/lsh.bin CACHE FILEPATH "Write the path to the lsh binary file" )
+#SET(LSH_INDEX_PATH ${SCENE_PATH}/lsh.idx CACHE FILEPATH "Write the path to the lsh index file")
+SET(DB_PATH ${SCENE_PATH}/hands.db CACHE FILEPATH "Write the path to the SQL DB path")
 
 configure_file(${CMAKE_SOURCE_DIR}/handclass_config.h.in ${CMAKE_SOURCE_DIR}/include/handclass_config.h)
 
-include (FindPkgConfig)
+#include (FindPkgConfig)
 find_package(Boost COMPONENTS regex filesystem system program_options unit_test_framework)
 find_package(GSL REQUIRED)
 find_package(OPENCV REQUIRED)
@@ -66,7 +70,8 @@ endif ()
 
 #find_package(OGRE REQUIRED)
 
-include_directories (${CMAKE_SOURCE_DIR}/include
+include_directories (
+    ${CMAKE_SOURCE_DIR}/include
     /usr/include/eigen3
     ${OPENCV_INCLUDE_DIRS} ${SOURCES_DIR_CVBLOBS}
     ${CMAKE_BINARY_DIR}
