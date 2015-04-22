@@ -92,6 +92,7 @@ public:
     virtual unsigned dim () const = 0;
     /// Add a point to the output histogram with weight.
     virtual void add (float *out, const float *in, float weight) const = 0;
+
     /// Add a point to the output histogram with weight = 1.
     void add (float *out, const float *in) const {
         add(out, in , 1.0);

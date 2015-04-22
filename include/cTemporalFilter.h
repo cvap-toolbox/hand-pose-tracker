@@ -23,7 +23,8 @@ This file is part of the Hand project (https://github.com/libicocco/Hand).
 
 #include <iostream>
 #include <boost/ptr_container/ptr_vector.hpp>
-#include <Eigen/Dense>
+//#include <Eigen/Dense>
+#include <eigen3/Eigen/Dense>    
 #include "cPose.h"
 #include "cDB.h"
 #include "typeDefinitions.h"

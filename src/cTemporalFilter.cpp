@@ -29,7 +29,9 @@ This file is part of the Hand project (https://github.com/libicocco/Hand).
 #include <boost/accumulators/statistics/weighted_mean.hpp>
 #include <boost/accumulators/statistics/weighted_variance.hpp>
 #include <boost/accumulators/statistics/min.hpp>
-#include <Eigen/Dense>
+
+//#include <Eigen/Dense>
+#include <eigen3/Eigen/Dense>
 #include "cPose.h"
 #include "cDB.h"
 #include "cTemporalFilter.h"

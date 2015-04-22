@@ -44,7 +44,7 @@ static const int gRows=100;
 
 int main(int argc,char *argv[])
 {
-  CDB lDB("/home/dama/thesis/code/Hand/handpose/scene/hands.db");
+  CDB lDB("/Users/martinhjelm/Dropbox/Code/TaskConstraints/hand-pose-tracker/scene/hands.db");
   float *lData[NTYPES];
   for(int i=0;i<NTYPES;++i)
     lData[i]=new float[gNFeatures*gDimsPadded[i]];

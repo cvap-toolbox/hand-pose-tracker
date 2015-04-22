@@ -5,9 +5,9 @@
 #)
 
 add_executable(renderhand renderhand.cc)
-target_link_libraries(renderhand 
-boost_system boost_filesystem boost_program_options
-opencv_highgui opencv_core opencv_video
+add_executable(convert convert.cpp)
+target_link_libraries(renderhand ${Boost_LIBRARIES} ${OpenCV_LIBS}
 #${OGRE_LIBRARIES}
-sqlite3 handclass)
+sqlite3 handclass
+)
 

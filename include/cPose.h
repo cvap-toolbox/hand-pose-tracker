@@ -32,8 +32,8 @@ This file is part of the Hand project (https://github.com/libicocco/Hand).
 #include <boost/accumulators/statistics/variance.hpp>
 #include <boost/accumulators/accumulators.hpp>
 #include <boost/accumulators/statistics/min.hpp>
-#include <Eigen/Dense>
-
+//#include <Eigen/Dense>
+#include <eigen3/Eigen/Dense>
 #include "utils.h"
 #include "constants.h"
 #include "cDB.h"
@@ -155,8 +155,8 @@ public:
                 void NormalizeWeight(double pNormConstant){mWeight/=pNormConstant;}
                 void NormalizeWeights(double pSumFeatW,double pSumPoseW,double pPoseW=0.5)
                 {
-                  mFeatW=(abs(pSumFeatW)<0.01)?mFeatW:mFeatW/pSumFeatW;
-                  mPoseW=(abs(pSumPoseW)<0.01)?mPoseW:mPoseW/pSumPoseW;
+                  mFeatW=(std::abs(pSumFeatW)<0.01)?mFeatW:mFeatW/pSumFeatW;
+                  mPoseW=(std::abs(pSumPoseW)<0.01)?mPoseW:mPoseW/pSumPoseW;
                   mWeight=(1-pPoseW)*mFeatW+pPoseW*mPoseW;
                 }
                 double getWeight() const{return mWeight;}

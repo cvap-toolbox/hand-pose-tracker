@@ -65,7 +65,7 @@ public:
 	bool initialize()
 	{
 		#ifndef NDEBUG
-		std::cout << "LOADING DATA..." << std::endl;
+		std::cout << "I AM LOADING DATA... " <<  mDataPath <<  std::endl;
 		boost::timer t;
 		t.restart();
 		#endif
@@ -73,7 +73,8 @@ public:
 		#ifndef NDEBUG
 		std::cout << boost::format("LOAD TIME: %1%s.") % t.elapsed() << std::endl;
 		#endif
-		
+        std::cout << "I AM LOADING DATA..." << std::endl;
+
 		mIndex = new Index;
 		std::ifstream is(mIndexPath, std::ios_base::binary);
 		if (is) {

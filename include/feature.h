@@ -31,9 +31,9 @@ This file is part of the Hand project (https://github.com/libicocco/Hand).
 #include "constants.h"
 
 template<typename tType1,typename tType2> std::ostream& printValue(std::pair<tType1,tType2> pValue,std::ostream& pOutput)
-{pOutput << setiosflags(std::ios::fixed) << std::setw(3) << std::setprecision(3) << pValue.first << " "<< pValue.second << " \t";return pOutput;}
+{pOutput << std::setiosflags(std::ios::fixed) << std::setw(3) << std::setprecision(3) << pValue.first << " "<< pValue.second << " \t";return pOutput;}
 template<typename tType> std::ostream& printValue(tType pValue,std::ostream& pOutput)
-{pOutput << setiosflags(std::ios::fixed) << std::setw(4) << std::setprecision(4)<< pValue << "\t";return pOutput;}
+{pOutput << std::setiosflags(std::ios::fixed) << std::setw(4) << std::setprecision(4)<< pValue << "\t";return pOutput;}
 
 /**
  * @brief Class for computing any feature, given different types of inputs

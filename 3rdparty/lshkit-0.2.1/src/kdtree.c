@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <values.h>
+#include <limits.h>
+#include <float.h>
 #include <math.h>
 #include <assert.h>
 #include "kdtree.h"

@@ -34,6 +34,7 @@
 #define __LSHKIT_APOST__
 
 #include <lshkit/common.h>
+#include <lshkit/archive.h>
 #include <lshkit/lsh.h>
 #include <lshkit/composite.h>
 #include <lshkit/metric.h>

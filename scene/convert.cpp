@@ -25,19 +25,21 @@ int main(int argc, char** argv) {
         scanf("%f", &data[i]);
     }
     cout << "Read everything into memory\n";
-    
+
     ofstream fs;
     
     if (format == "flann") {
-        fs.open("flann.bin", ios::in | ios::out | ios::binary);
+        fs.open("flann.bin", ios::app | ios::out | ios::binary);
+        if (fs.is_open())
+            printf("DATA\n");
     } else if (format == "lsh") {
-        fs.open("lsh.bin", ios::in | ios::out | ios::binary);
+        fs.open("lsh.bin", ios::out | ios::binary);
         header[0] = 4;
         header[1] = 106920;
         header[2] = 512;
         fs.write((char*)header, 3 * 4);
     } else {
-        fs.open("hog.bin", ios::in | ios::out | ios::binary);
+        fs.open("hog.bin", ios::out | ios::binary);
     }
     fs.write((char*)data, 512 * 106920 * sizeof(float));
     fs.close();
